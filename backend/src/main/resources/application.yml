@@ -1,0 +1,44 @@
+server:
+  port: 9999
+  servlet:
+    context-path: /dnd/api
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PW}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 3600
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB103Dialect
+        format_sql: true
+        default_batch_fetch_size: 1000
+  sql:
+    init:
+      encoding: UTF-8
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+front:
+  scheme: http
+  host: localhost:5173
+  url:
+    home: http://localhost:5173
+    login: http://localhost:5173/members/login
+    bridge: http://localhost:5173/bridge
+
+ai:
+  url: http://localhost:8000
+
