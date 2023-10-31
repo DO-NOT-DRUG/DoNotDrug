@@ -1,7 +1,6 @@
 server:
   port: 9999
-  servlet:
-    context-path: /dnd/api
+
 
 spring:
   datasource:
@@ -12,6 +11,30 @@ spring:
       maximum-pool-size: 10
       connection-timeout: 3600
     driver-class-name: org.mariadb.jdbc.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_SERVICE_ID}
+    password: ${EMAIL_SERVICE_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+      auth-code-expiration-millis: 1800000  # 30 * 60 * 1000 == 30?
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600
+      cache-null-values: false
+      host: localhost
+      port: 6380
+      password: ${REDIS_PASSWORD}
 
   jpa:
     show-sql: true
@@ -31,14 +54,6 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 
-front:
-  scheme: http
-  host: localhost:5173
-  url:
-    home: http://localhost:5173
-    login: http://localhost:5173/members/login
-    bridge: http://localhost:5173/bridge
-
-ai:
-  url: http://localhost:8000
-
+jwt:
+  token:
+    secret: ${JWT_SECRET_KEY}
