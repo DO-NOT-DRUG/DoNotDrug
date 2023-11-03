@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Container from '../../components/Container/Container';
+
 const Form = styled.form`
   width: 640px;
   margin: auto;
@@ -9,7 +11,6 @@ const Form = styled.form`
   justify-content: center;
   height: 100vh;
   gap: 1rem;
-  padding: 2rem;
   background-color: lightpink;
 `;
 const Ul = styled.ul`
@@ -54,6 +55,7 @@ const Button = styled.button`
 
 function Join() {
   return (
+    <Container as="section" align="center" width="widthMedium">
       <Form>
         <Ul>
           <Li>
@@ -99,6 +101,7 @@ function Join() {
         </Ul>
         <Button>회원가입하기</Button>
       </Form>
+    </Container>
   )
 }
 
