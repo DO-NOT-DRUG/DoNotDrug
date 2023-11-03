@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Container from '../../components/Container/Container';
+import { Button, Container } from '../../components';
 
 const Form = styled.form`
   width: 640px;
@@ -29,7 +29,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  width: 430px;
+  width: 360px;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -38,19 +38,6 @@ const Input = styled.input`
 const RadioContainer = styled.div`
   display: flex;
   gap: 1rem;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  height: 60px;
-  border: none;
-  border-radius: 4px;
-  background-color: #6B4EFF;
-  color: white;
-  cursor: pointer;
-  &:hover {
-    background-color: #5538EE;
-  }
 `;
 
 function Join() {
@@ -77,6 +64,7 @@ function Join() {
               placeholder='이메일을 입력해주세요' 
               required
             />
+            <Button isSecondary >중복확인</Button>
           </Li>
           <Li>
             <Label htmlFor="loginPassword">비밀번호</Label>

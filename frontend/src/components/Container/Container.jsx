@@ -31,7 +31,7 @@ const StyledContainer = styled.section`
   ${props => props.className}
 `;
   
-function Container({
+export function Container({
   as: Component,
   className,
   children,
@@ -39,7 +39,7 @@ function Container({
   width,
   ...restProps
 }) {
-  // className을 조합하여 StyledContainer에 전달합니다.
+  
   const combineClassNames = `${align} ${width} ${className}`.trim();
 
   return (
@@ -63,5 +63,3 @@ Container.propTypes = {
   align: oneOf(['center', 'left', 'right']),
   width: oneOf(['widthSmall', 'widthMedium', 'widthLarge']),
 };
-
-export default Container;

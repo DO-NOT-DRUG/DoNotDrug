@@ -1,0 +1,35 @@
+import styled from "styled-components";
+import PropTypes from 'prop-types';
+
+const StyledButton = styled.button`
+  padding: 16px 0;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+
+
+  background-color: ${props => props.isSecondary ? 'white' : '#6B4EFF'};
+  color: ${props => props.isSecondary ? '#6B4EFF' : 'white'};
+  border: ${props => props.isSecondary && `1px solid #6B4EFF`};
+  &:hover {
+    background-color: #5538EE;
+    color: white;
+  }
+`;
+
+export function Button({ isSecondary, className, children, ...restProps}) {
+  return (
+    <StyledButton isSecondary={isSecondary} className={className} {...restProps}>
+      {children}
+    </StyledButton>
+  )
+}
+
+Button.defaultProps = {
+  isSecondary: false,
+};
+
+Button.propTypes = {
+  isSecondary: PropTypes.bool,
+};
