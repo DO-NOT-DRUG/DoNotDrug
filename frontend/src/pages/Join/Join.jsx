@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Button, Container } from '../../components';
+import { Button, Container, Input } from '../../components';
 
 const Form = styled.form`
   width: 640px;
@@ -26,13 +26,6 @@ const Label = styled.label`
   width: 120px;
   background-color: grey;
   text-align: center;
-`;
-
-const Input = styled.input`
-  width: 360px;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 `;
 
 const RadioContainer = styled.div`
