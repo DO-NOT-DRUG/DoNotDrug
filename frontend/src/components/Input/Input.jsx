@@ -19,3 +19,15 @@ export function Input({ type, id, name, placeholder, ...restProps }) {
   );
 }
 
+
+/* Props ----------------------------------------------------------*/
+
+Input.propTypes = {
+  usage: PropTypes.oneOf([
+    'email',
+    'name',
+    'pw',
+    'repw',
+    'search'
+  ])
+};

@@ -35,30 +35,19 @@ const RadioContainer = styled.div`
 `;
 
 
-
-
 function Join() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
-
+  const [role, setRole] = useState('GENERAL');
   
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  }
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handleNameChange = (e) => setName(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleRePasswordChange = (e) => setRePassword(e.target.value);
+  const handleRoleChange = (e) => setRole(e.target.value);
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  }
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  }
-
-  const handleRePasswordChange = (event) => {
-    setRePassword(event.target.value);
-  }
 
   // 회원가입 폼 제출 요청 
   const handleSubmitForm = async (event) => {
@@ -72,8 +61,11 @@ function Join() {
     const joinData = {
       email,
       name,
-      password,
+      loginPassword: password,
+      role
     };
+    
+    console.log(joinData);
 
     try {
       const response = await axios.post('/api/join', joinData);
@@ -142,6 +134,30 @@ function Join() {
               required
               onChange={handleRePasswordChange}
             />
+          </Li>
+          <Li>
+            <Label>
+              <Input 
+                type="radio"
+                name="role"
+                value="GENERAL"
+                checked={role==='GENERAL'}
+                onChange={handleRoleChange}
+              />
+              일반사용자
+            </Label>
+          </Li>
+          <Li>
+            <Label>
+              <Input 
+                type="radio"
+                name="role"
+                value="ADMIN"
+                checked={role==='ADMIN'}
+                onChange={handleRoleChange}
+              />
+              관리자
+            </Label>
           </Li>
         </Ul>
         <Button type="submit">회원가입하기</Button>
