@@ -9,5 +9,13 @@ export default defineConfig({
     host: 'localhost',
     port: 3000,
     cors: true,
+    proxy: {
+      '/api': {
+        target: 'https://localhost:9999',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 });

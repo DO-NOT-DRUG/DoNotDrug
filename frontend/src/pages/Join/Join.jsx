@@ -76,7 +76,7 @@ function Join() {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/join', joinData);
+      const response = await axios.post('/api/join', joinData);
       alert('회원가입 성공: ' + response.data.message);
       /* 로그인 페이지 이동 로직 */
     } catch (error) {
