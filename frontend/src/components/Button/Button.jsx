@@ -19,11 +19,25 @@ const StyledButton = styled(({ isSecondary, ...rest }) => <button {...rest} />)`
     background-color: #5538EE;
     color: white;
   }
+
+  &.widthStart {
+    width: 360px;
+  }
+  
+  ${(props) => props.className};
 `;
 
-export function Button({ isSecondary, className, children, ...restProps}) {
+export function Button({ 
+  isSecondary, 
+  className, 
+  children,
+  width,
+  ...restProps
+}) {
+  const combineClassNames = `${width} ${className}`.trim();
+  
   return (
-    <StyledButton isSecondary={isSecondary} className={className} {...restProps}>
+    <StyledButton isSecondary={isSecondary} className={combineClassNames} {...restProps}>
       {children}
     </StyledButton>
   )
