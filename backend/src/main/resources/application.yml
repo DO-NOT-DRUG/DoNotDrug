@@ -33,7 +33,7 @@ spring:
       time-to-live: 3600
       cache-null-values: false
       host: localhost
-      port: 6380
+      port: 6379
       password: ${REDIS_PASSWORD}
 
   jpa:
