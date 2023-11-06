@@ -5,6 +5,7 @@ import { BaseLayout } from '@/components/Layout/Layout';
 import LandingPage from '@/pages/LandingPage/LandingPage';
 import Join from '@/pages/Join/Join';
 import Login from '@/pages/Login/Login';
+import Search from '@/pages/Search/Search';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/join" element={<Join />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path='/search' element={<Search/>}/>
         </Routes>
       </BaseLayout>
     </Router>
