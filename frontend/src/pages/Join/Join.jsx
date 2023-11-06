@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Button, Container, Input } from '../../components';
+import { Button, Container, Input, Form } from '../../components';
+import { useNavigate } from 'react-router-dom';
 
-
-const Form = styled.form`
-  width: 640px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100vh;
-  gap: 1rem;
-  background-color: lightpink;
-`;
 const Ul = styled.ul`
   background-color: lightgreen;
 `
@@ -70,7 +60,7 @@ function Join() {
     try {
       const response = await axios.post('/api/join', joinData);
       alert('회원가입 성공: ' + response.data.message);
-      /* 로그인 페이지 이동 로직 */
+      useNavigate('/login');
     } catch (error) {
       if (error.response) {
         // 요청이 이루어졌으나 서버가 2xx 범위가 아닌 상태 코드로 응답
