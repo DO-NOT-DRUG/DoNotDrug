@@ -28,7 +28,8 @@ const StyledContainer = styled.section`
     max-width: 1024px;
   }
 
-  ${props => props.className}
+  ${props => props.className};
+  ${props => props.additionalStyles};
 `;
   
 export function Container({

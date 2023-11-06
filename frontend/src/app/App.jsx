@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { BaseLayout } from '../../src/components/Layout/Layout';
-import LandingPage from '../../src/pages/LandingPage/LandingPage';
-import Join from '../../src/pages/Join/Join';
-import Login from '../../src/pages/Login/Login';
+import { BaseLayout } from '@/components/Layout/Layout';
+import LandingPage from '@/pages/LandingPage/LandingPage';
+import Join from '@/pages/Join/Join';
+import Login from '@/pages/Login/Login';
 
 function App() {
   return (
