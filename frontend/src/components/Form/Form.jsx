@@ -6,9 +6,11 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
+  align-items: center;
+  min-height: 600px;
   gap: 1rem;
   background-color: lightgrey;
+  border-radius: 20px;
 `;
 
 

@@ -7,13 +7,12 @@ const StyledButton = styled(({ isSecondary, ...rest }) => <button {...rest} />)`
   border: none;
   border-radius: 8px;
   font-weight: bold;
-  margin: 0 auto;
 
   background-color: ${props => props.isSecondary ? 'white' : '#6B4EFF'};
   color: ${props => props.isSecondary ? '#6B4EFF' : 'white'};
   border: ${props => props.isSecondary ? '1px solid #6B4EFF' : 'none'};
   margin-left: ${props => props.isSecondary ? '8px' : '0'};
-  width: ${props => props.isSecondary ? '20%' : '77%'};
+  width: ${props => props.isSecondary ? '15%' : '59%'};
   
   &:hover {
     background-color: #5538EE;

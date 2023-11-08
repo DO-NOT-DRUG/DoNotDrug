@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useSetRecoilState } from 'recoil';
-import { loginState } from '@/@state/authState';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { Button, Container, Input, Form } from '../../components';
+import { Button, Container, Input, Form, Title, ButtonWrapper } from '../../components';
+import { requestLogin } from '@/api/requestLogin';
+
+const InputWrapper = styled.div`
+  padding: 10px 0
+`;
+
 const Li = styled.li`
-  display: flex;
-  height: 60px;
+  height: 80px;
   padding: 20px 0;
-  line-height: 60px;
 `;
 
 const Label = styled.label`
-  width: 120px;
-  background-color: grey;
-  text-align: center;
+  display: block;
+  padding: 4px;
 `;
 
 function Login() {
@@ -26,72 +26,54 @@ function Login() {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  // Recoil 상태 설정
-  const setLogin = useSetRecoilState(loginState);
+  const login = requestLogin();
 
-  // 로그인 요청 
+  const LoginData = {
+    email,
+    loginPassword: password,
+  };
+
   const handleLoginRequest = async (event) => {
     event.preventDefault();
-
-    const LoginData = {
-      email,
-      loginPassword: password,
-    };
-    
-    console.log(LoginData);
-
-    try {
-      const response = await axios.post('/api/login', LoginData);
-      alert('환영합니다 ' + response.data.message + '님!');
-      // 로그인 상태 업데이트
-      setLogin(response.data.user);
-      // 페이지 이동
-      useNavigate('/');
-
-
-    } catch (error) {
-      if (error.response) {
-        // 요청이 이루어졌으나 서버가 2xx 범위가 아닌 상태 코드로 응답
-        alert('로그인 실패: ' + error.response.data.message);
-      } else if (error.request) {
-        // 요청 실패
-        alert('로그인 요청 실패: 서버에서 응답이 없습니다.');
-      } else {
-        // 요청 설정 중, 문제발생
-        alert('로그인 요청 중 오류 발생: ' + error.message);
-      }
-    }
-  }
-
+    login(LoginData);
+  };
 
   return (
     <Container as="section" align="center" width="widthMedium">
+      <Title as="h2" titleStyle="XXL" align="center">Log in to DND</Title>
       <Form onSubmit={handleLoginRequest}>
         <ul>
           <Li>
             <Label htmlFor="email">이메일</Label>
-            <Input 
-              type="email"
-              id="email"
-              name="email"
-              placeholder='이메일을 입력해주세요' 
-              required
-              onChange={handleEmailChange}
-            />
+            <InputWrapper>
+              <Input 
+                type="email"
+                id="email"
+                name="email"
+                placeholder='이메일을 입력해주세요' 
+                required
+                onChange={handleEmailChange}
+              />
+            </InputWrapper>
           </Li>
           <Li>
             <Label htmlFor="loginPassword">비밀번호</Label>
-            <Input 
-              type="password"
-              id="loginPassword"
-              name="loginPassword"
-              placeholder='비밀번호를 입력해주세요'
-              required
-              onChange={handlePasswordChange}
-            />
+            <InputWrapper>
+              <Input 
+                type="password"
+                id="loginPassword"
+                name="loginPassword"
+                placeholder='비밀번호를 입력해주세요'
+                required
+                onChange={handlePasswordChange}
+              />
+            </InputWrapper>
           </Li>
         </ul>
-        <Button type="submit">로그인</Button>
+        <ButtonWrapper>
+          <Button type="submit">로그인</Button>
+          <Link to='/join'>Already have an account?</Link>
+        </ButtonWrapper>
       </Form>
     </Container>
   )

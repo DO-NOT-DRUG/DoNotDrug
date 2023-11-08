@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 const StyledInput = styled.input`
   width: 360px;
+  height: 40px;
   padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
 `;
 
 export function Input({ type, id, name, placeholder, ...restProps }) {
@@ -18,7 +19,6 @@ export function Input({ type, id, name, placeholder, ...restProps }) {
       {...restProps}/>
   );
 }
-
 
 /* Props ----------------------------------------------------------*/
 

@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { Button, Container, Input, Form } from '../../components';
-import { useNavigate } from 'react-router-dom';
 
-const Ul = styled.ul`
-  background-color: lightgreen;
-`
+import { Button, Container, Input, Form, Title, ButtonWrapper, RoleInput } from '../../components';
+import { requestJoin } from '@/api/requestJoin';
+
 const Li = styled.li`
   display: flex;
   height: 60px;
@@ -15,11 +12,10 @@ const Li = styled.li`
 `;
 const Label = styled.label`
   width: 120px;
-  background-color: grey;
-  text-align: center;
+
 `;
 
-const RadioContainer = styled.div`
+const RadioWrapper = styled.div`
   display: flex;
   gap: 1rem;
 `;
@@ -38,6 +34,14 @@ function Join() {
   const handleRePasswordChange = (e) => setRePassword(e.target.value);
   const handleRoleChange = (e) => setRole(e.target.value);
 
+  const Join = requestJoin();
+
+  const joinData = {
+    email,
+    name,
+    loginPassword: password,
+    role
+  };
 
   // 회원가입 폼 제출 요청 
   const handleSubmitForm = async (event) => {
@@ -48,38 +52,15 @@ function Join() {
       return;
     }
 
-    const joinData = {
-      email,
-      name,
-      loginPassword: password,
-      role
-    };
+    Join(joinData);
     
-    console.log(joinData);
-
-    try {
-      const response = await axios.post('/api/join', joinData);
-      alert('회원가입 성공: ' + response.data.message);
-      useNavigate('/login');
-    } catch (error) {
-      if (error.response) {
-        // 요청이 이루어졌으나 서버가 2xx 범위가 아닌 상태 코드로 응답
-        alert('회원가입 실패: ' + error.response.data.message);
-      } else if (error.request) {
-        // 요청이 이루어 졌으나 응답을 받지 못함
-        alert('회원가입 요청 실패: 서버에서 응답이 없습니다.');
-      } else {
-        // 요청을 설정하는 중에 문제가 발생함
-        alert('회원가입 요청 중 오류 발생: ' + error.message);
-      }
-    }
   }
-
 
   return (
     <Container as="section" align="center" width="widthMedium">
+      <Title as="h2" titleStyle="XXL" align="center">Join DND</Title>
       <Form onSubmit={handleSubmitForm}>
-        <Ul>
+        <ul>
           <Li>
             <Label htmlFor="name">이름</Label>
             <Input 
@@ -126,31 +107,37 @@ function Join() {
             />
           </Li>
           <Li>
-            <Label>
-              <Input 
+            <RadioWrapper>
+              <Label htmlFor='role'>
+                일반사용자
+              </Label>
+              <RoleInput 
                 type="radio"
                 name="role"
                 value="GENERAL"
                 checked={role==='GENERAL'}
                 onChange={handleRoleChange}
               />
-              일반사용자
-            </Label>
+            </RadioWrapper>
           </Li>
           <Li>
-            <Label>
-              <Input 
+            <RadioWrapper>
+              <Label htmlFor='role'>
+                관리자
+              </Label>
+              <RoleInput 
                 type="radio"
                 name="role"
                 value="ADMIN"
                 checked={role==='ADMIN'}
                 onChange={handleRoleChange}
               />
-              관리자
-            </Label>
+            </RadioWrapper>
           </Li>
-        </Ul>
-        <Button type="submit">회원가입하기</Button>
+        </ul>
+        <ButtonWrapper>
+          <Button type="submit">회원가입하기</Button>
+        </ButtonWrapper>
       </Form>
     </Container>
   )
