@@ -33,6 +33,4 @@ public class Twitter {
 
     private String url;
 
-    private String link;
-
 }

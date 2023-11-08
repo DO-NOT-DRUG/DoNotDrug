@@ -16,7 +16,17 @@ async def main():
     # await api.pool.add_account("username", "password", "email", "email_password")
     # await api.pool.login_all()
 
-    word = "필로폰" # Search word
+    word = "케이" # Search word
+    # keyword_list = [
+    # "드러그",
+    # "케이",
+    # "떨",
+    # "MDMA",
+    # "러미나",
+    # "GHB"]
+    
+    # for word in keyword_list:
+        
     tweets = []
     async for tweet in api.search(word, limit = 1000):
         # get links
