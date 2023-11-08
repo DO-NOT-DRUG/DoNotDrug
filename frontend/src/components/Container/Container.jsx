@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 
 const StyledContainer = styled.section`
+  padding: 3rem 2rem;
+
   &.center {
     margin-left: auto;
     margin-right: auto;

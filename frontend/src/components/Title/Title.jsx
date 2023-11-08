@@ -26,8 +26,10 @@ const StyledTitle = styled.h2`
   &.center {
     text-align: center;
   }
-
-
+  
+  &.Login {
+    color: #6B4EFF;
+  }
 
   ${props => props.className};
 `;

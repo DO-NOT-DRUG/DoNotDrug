@@ -1,20 +1,34 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { Button, Container, Input, Form, Title } from '../../components';
 import { requestLogin } from '@/api/requestLogin';
 
-const Li = styled.li`
+const InputWrapper = styled.div`
+  padding: 10px 0
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  padding: 50px 0 0;
+  text-align: center;
   display: flex;
-  height: 60px;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: #6B4EFF;
+`;
+
+const Li = styled.li`
+  height: 80px;
   padding: 20px 0;
-  line-height: 60px;
 `;
 
 const Label = styled.label`
-  width: 120px;
+  display: block;
   // background-color: grey;
-  text-align: center;
+  padding: 4px;
 `;
 
 function Login() {
@@ -38,33 +52,40 @@ function Login() {
 
   return (
     <Container as="section" align="center" width="widthMedium">
-      <Title as="h2" titleStyle="XXL" align="center">로그인</Title>
+      <Title as="h2" titleStyle="XXL" align="center" Login="Login">Log in to DND</Title>
       <Form onSubmit={handleLoginRequest}>
         <ul>
           <Li>
-            <Label htmlFor="email">이메일</Label>
-            <Input 
-              type="email"
-              id="email"
-              name="email"
-              placeholder='이메일을 입력해주세요' 
-              required
-              onChange={handleEmailChange}
-            />
+            <Label htmlFor="email">Email</Label>
+            <InputWrapper>
+              <Input 
+                type="email"
+                id="email"
+                name="email"
+                placeholder='이메일을 입력해주세요' 
+                required
+                onChange={handleEmailChange}
+              />
+            </InputWrapper>
           </Li>
           <Li>
-            <Label htmlFor="loginPassword">비밀번호</Label>
-            <Input 
-              type="password"
-              id="loginPassword"
-              name="loginPassword"
-              placeholder='비밀번호를 입력해주세요'
-              required
-              onChange={handlePasswordChange}
-            />
+            <Label htmlFor="loginPassword">Password</Label>
+            <InputWrapper>
+              <Input 
+                type="password"
+                id="loginPassword"
+                name="loginPassword"
+                placeholder='비밀번호를 입력해주세요'
+                required
+                onChange={handlePasswordChange}
+              />
+            </InputWrapper>
           </Li>
         </ul>
-        <Button type="submit">로그인</Button>
+        <ButtonWrapper>
+          <Button type="submit">로그인</Button>
+          <Link to='/join'>Already have an account?</Link>
+        </ButtonWrapper>
       </Form>
     </Container>
   )
