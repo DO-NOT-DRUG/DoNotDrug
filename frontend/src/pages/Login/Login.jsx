@@ -2,22 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Button, Container, Input, Form, Title } from '../../components';
+import { Button, Container, Input, Form, Title, ButtonWrapper } from '../../components';
 import { requestLogin } from '@/api/requestLogin';
 
 const InputWrapper = styled.div`
   padding: 10px 0
-`;
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  padding: 50px 0 0;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  color: #6B4EFF;
 `;
 
 const Li = styled.li`

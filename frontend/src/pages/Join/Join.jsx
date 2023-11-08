@@ -1,22 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { Button, Container, Input, Form, Title } from '../../components';
-import { useNavigate } from 'react-router-dom';
+
+import { Button, Container, Input, Form, Title, ButtonWrapper, RoleInput } from '../../components';
 import { requestJoin } from '@/api/requestJoin';
-
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  padding: 50px 0 0;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  color: #6B4EFF;
-`;
-
 
 const Li = styled.li`
   display: flex;
@@ -26,11 +12,10 @@ const Li = styled.li`
 `;
 const Label = styled.label`
   width: 120px;
-  background-color: grey;
-  text-align: center;
+
 `;
 
-const RadioContainer = styled.div`
+const RadioWrapper = styled.div`
   display: flex;
   gap: 1rem;
 `;
@@ -68,8 +53,8 @@ function Join() {
     }
 
     Join(joinData);
+    
   }
-
 
   return (
     <Container as="section" align="center" width="widthMedium">
@@ -122,31 +107,37 @@ function Join() {
             />
           </Li>
           <Li>
-            <Label>
-              <Input 
+            <RadioWrapper>
+              <Label htmlFor='role'>
+                일반사용자
+              </Label>
+              <RoleInput 
                 type="radio"
                 name="role"
                 value="GENERAL"
                 checked={role==='GENERAL'}
                 onChange={handleRoleChange}
               />
-              일반사용자
-            </Label>
+            </RadioWrapper>
           </Li>
           <Li>
-            <Label>
-              <Input 
+            <RadioWrapper>
+              <Label htmlFor='role'>
+                관리자
+              </Label>
+              <RoleInput 
                 type="radio"
                 name="role"
                 value="ADMIN"
                 checked={role==='ADMIN'}
                 onChange={handleRoleChange}
               />
-              관리자
-            </Label>
+            </RadioWrapper>
           </Li>
         </ul>
-        <Button type="submit">회원가입하기</Button>
+        <ButtonWrapper>
+          <Button type="submit">회원가입하기</Button>
+        </ButtonWrapper>
       </Form>
     </Container>
   )

@@ -20,7 +20,6 @@ export function Input({ type, id, name, placeholder, ...restProps }) {
   );
 }
 
-
 /* Props ----------------------------------------------------------*/
 
 Input.propTypes = {

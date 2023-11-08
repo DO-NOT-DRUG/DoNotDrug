@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledButtonWrapper = styled.div`
   width: 100%;
-  padding: 50px 0 0;
+  padding: 50px 0 30px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -12,7 +12,6 @@ const StyledButtonWrapper = styled.div`
 `;
 
 export function ButtonWrapper({ children, ...restProps}) {
-
   return (
     <StyledButtonWrapper {...restProps}>
       {children}
