@@ -27,7 +27,6 @@ const Li = styled.li`
 
 const Label = styled.label`
   display: block;
-  // background-color: grey;
   padding: 4px;
 `;
 
@@ -52,11 +51,11 @@ function Login() {
 
   return (
     <Container as="section" align="center" width="widthMedium">
-      <Title as="h2" titleStyle="XXL" align="center" Login="Login">Log in to DND</Title>
+      <Title as="h2" titleStyle="XXL" align="center">Log in to DND</Title>
       <Form onSubmit={handleLoginRequest}>
         <ul>
           <Li>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">이메일</Label>
             <InputWrapper>
               <Input 
                 type="email"
@@ -69,7 +68,7 @@ function Login() {
             </InputWrapper>
           </Li>
           <Li>
-            <Label htmlFor="loginPassword">Password</Label>
+            <Label htmlFor="loginPassword">비밀번호</Label>
             <InputWrapper>
               <Input 
                 type="password"

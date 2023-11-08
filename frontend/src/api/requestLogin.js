@@ -24,17 +24,17 @@ export function requestLogin() {
       
       // 성공시 페이지 이동
       navigate('/');
-  
+
   
     } catch (error) {
-      if (error.response) {
-        alert('로그인 실패: ' + error.response.data.message);
-      } else if (error.request) {
-        alert('로그인 요청 실패: 서버에서 응답이 없습니다.');
-      } else {
-        alert('로그인 요청 중 오류 발생: ' + error.message);
+        if (error.response) {
+          alert('로그인 실패: ' + error.response.data.message);
+        } else if (error.request) {
+          alert('로그인 요청 실패: 서버에서 응답이 없습니다.');
+        } else {
+          alert('로그인 요청 중 오류 발생: ' + error.message);
+        }
       }
-    }
 
   };
 
