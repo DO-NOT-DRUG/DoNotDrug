@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { Button, Container, Input, Form } from '../../components';
+import { Button, Container, Input, Form, Title } from '../../components';
 import { requestLogin } from '@/api/requestLogin';
 
 const Li = styled.li`
@@ -13,7 +13,7 @@ const Li = styled.li`
 
 const Label = styled.label`
   width: 120px;
-  background-color: grey;
+  // background-color: grey;
   text-align: center;
 `;
 
@@ -38,6 +38,7 @@ function Login() {
 
   return (
     <Container as="section" align="center" width="widthMedium">
+      <Title as="h2" titleStyle="XXL" align="center">로그인</Title>
       <Form onSubmit={handleLoginRequest}>
         <ul>
           <Li>
