@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Container, Input, Form } from '../../components';
+
 const Li = styled.li`
   display: flex;
   height: 60px;
@@ -25,6 +26,8 @@ function Login() {
   
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
+
+  const navigate = useNavigate();
 
   // Recoil 상태 설정
   const setLogin = useSetRecoilState(loginState);
@@ -46,7 +49,7 @@ function Login() {
       // 로그인 상태 업데이트
       setLogin(response.data.user);
       // 페이지 이동
-      useNavigate('/');
+      navigate('/');
 
 
     } catch (error) {

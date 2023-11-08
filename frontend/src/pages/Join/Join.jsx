@@ -37,11 +37,14 @@ function Join() {
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleRePasswordChange = (e) => setRePassword(e.target.value);
   const handleRoleChange = (e) => setRole(e.target.value);
+  
+  const navigate = useNavigate();
 
 
   // 회원가입 폼 제출 요청 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
+
 
     if(password !== rePassword) {
       alert('비밀번호가 일치하지 않습니다.');
@@ -60,7 +63,7 @@ function Join() {
     try {
       const response = await axios.post('/api/join', joinData);
       alert('회원가입 성공: ' + response.data.message);
-      useNavigate('/login');
+      navigate('/login');
     } catch (error) {
       if (error.response) {
         // 요청이 이루어졌으나 서버가 2xx 범위가 아닌 상태 코드로 응답
