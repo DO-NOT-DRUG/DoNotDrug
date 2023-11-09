@@ -44,15 +44,12 @@ public class ProbationService {
     }
 
     @Transactional
-    public void registerCriminal(Long probationId, List<RegisterCriminalRequest> registerCriminalRequestList) {
+    public void registerCriminal(Long probationId, RegisterCriminalRequest registerCriminalRequest) {
         Probation probation = findById(probationId);
-
-        for(int i=0;i<registerCriminalRequestList.size();i++) {
-            Criminal criminal = criminalService.findById(registerCriminalRequestList.get(i).criminalId());
-            criminal.updateStatus();
-            criminal.updateProbation(probation);
-            probation.getCriminals().add(criminal);
-        }
+        Criminal criminal = criminalService.findById(registerCriminalRequest.criminalId());
+        criminal.updateStatus();
+        criminal.updateProbation(probation);
+        probation.getCriminals().add(criminal);
     }
 
     @Transactional(readOnly = true)

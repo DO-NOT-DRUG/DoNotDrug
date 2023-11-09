@@ -39,9 +39,9 @@ public class ProbationController {
     // 미약사범 등록
     @PostMapping("/register/criminal/{probationId}")
     @ApiOperation(value="마약 사범 등록", notes="미약사범 등록")
-    public ResponseEntity<Void> registerCriminal(@RequestBody List<RegisterCriminalRequest> registerCriminalRequestList, @PathVariable Long probationId) {
+    public ResponseEntity<Void> registerCriminal(@RequestBody RegisterCriminalRequest registerCriminalRequest, @PathVariable Long probationId) {
 
-        probationService.registerCriminal(probationId, registerCriminalRequestList);
+        probationService.registerCriminal(probationId, registerCriminalRequest);
         return ResponseEntity.noContent().build();
     }
 
