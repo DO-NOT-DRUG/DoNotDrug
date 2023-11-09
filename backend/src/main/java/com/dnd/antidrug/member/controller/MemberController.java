@@ -64,6 +64,7 @@ public class MemberController {
     @ApiOperation(value="로그인", notes="로그인")
     public ResponseEntity<TokenResponse> loginMember(@RequestBody @Valid LoginRequest loginRequest) {
         log.info("{} request Login", loginRequest.email());
+        log.info("{}",loginRequest.role());
 
         TokenResponse tokenResponse = memberService.loginMember(loginRequest);
 
