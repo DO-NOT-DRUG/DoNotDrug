@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom';
 
-import { Container, Title } from '@/components'
+import { Button, Container, Title } from '@/components'
 import Loading from '@/components/Loading/Loading';
 import { requestUserData } from '@/api/requestUserData';
 
@@ -39,17 +40,24 @@ const TableCell = styled.td`
 function AdminMain() {
   const [users, setUsers] = useState([]);
   const [isLoading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     requestUserData().then(data => {
       setUsers(data);
       setLoading(false);
     });
   }, []);
+  
+  const navigate = useNavigate();
+
+  const navigateToRegister = () => {
+    navigate('/RegisterCriminal');
+  };
 
   return(
     <Container as="section" align="center" >
       <Title as="h2" titleStyle="XXL" align="center">마약사범 리스트</Title>
+      <Button onClick={navigateToRegister} isSecondary>등록</Button>
       {isLoading ? (
         <Loading />
       ) : (
