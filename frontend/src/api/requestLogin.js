@@ -13,7 +13,7 @@ export function requestLogin() {
     try {
       const response = await axios.post('/api/member/login', LoginData);
       console.log(response)
-      const { accessToken, refreshToken } = response.data
+      const { accessToken, refreshToken, Role } = response.data
       
       // AccessToken ->  Recoil 상태에 저장.
       setAccessToken(accessToken);
@@ -24,7 +24,12 @@ export function requestLogin() {
       alert('환영합니다 ' + response.data.message + '님!');
       
       // 성공시 페이지 이동
-      navigate('/');
+      if (Role === 'CRIMINAL') {
+        navigate('/search');
+      } else {
+        navigate('/adminMain');
+      }
+      
 
   
     } catch (error) {
