@@ -45,7 +45,7 @@ export default function Posts() {
 
   const word = location.state.keyword;
 
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -53,11 +53,31 @@ export default function Posts() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    axios.get('마약사전.json').then((res) => {
-      setData(res.data);
-      setTotalPages(Math.ceil(res.data.length / itemsPerPage));
-      setLoading(false);
-    });
+    setLoading(true);
+    // const criminalId =
+    const token = sessionStorage.getItem('accessToken');
+    axios
+      .post(
+        `/api/v1/tweet/list/${criminalId}`,
+        {
+          keyword: word,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        setData(res.data);
+        setTotalPages(Math.ceil(res.data.length / itemsPerPage));
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   const startIndex = currentPage * itemsPerPage;
@@ -69,13 +89,13 @@ export default function Posts() {
   };
   return (
     <Container>
-      <H1>
-        <span>{word}</span>의 검색 결과입니다.
-      </H1>
       {isLoading ? (
         <Loading />
-      ) : data ? (
+      ) : totalPages !== 0 ? (
         <div>
+          <H1>
+            <span>{word}</span>의 검색 결과입니다.
+          </H1>
           {subset.map((item, idx) => {
             return (
               <Tweet
@@ -104,7 +124,9 @@ export default function Posts() {
           />
         </div>
       ) : (
-        <div>{keyword} 검색 결과가 없습니다.</div>
+        <H1>
+          <span>{word}</span> 검색 결과가 없습니다.
+        </H1>
       )}
     </Container>
   );

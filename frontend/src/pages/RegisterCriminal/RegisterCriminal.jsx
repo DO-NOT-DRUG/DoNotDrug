@@ -1,6 +1,6 @@
 import { Container } from '@/components';
+import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Form = styled.form`
@@ -37,23 +37,47 @@ const SubmitBtn = styled.input`
     cursor: pointer;
     &:hover {
       opacity: 0.8;
-      background-color: #5538ee;
+      background-color: #6b4eff;
       color: white;
     }
   }
 `;
 
-export default function Search() {
-  const navigate = useNavigate();
-  const [word, setWord] = useState('');
+export default function RegisterCriminal() {
+  const [criminalId, setCriminalId] = useState('');
+  const probationId = 'admin1';
 
   const onChange = (e) => {
-    setWord(e.target.value);
+    setCriminalId(e.target.value);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    navigate('/posts', { state: { keyword: word } });
+    const token = sessionStorage.getItem('accessToken');
+    axios
+      .post(
+        `/api/v1/probation/register/criminal/${probationId}`,
+        {
+          criminalId: criminalId,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+      .then((res) => {
+        alert(id + '가 관리 목록에 추가되었습니다.');
+      })
+      .catch((error) => {
+        // console.log(error);
+        console.log(error.response.data);
+        console.log(error.response.status);
+        alert('등록에 실패했습니다.');
+      })
+      .finally(() => {
+        setId('');
+      });
   };
   return (
     <Container>
@@ -61,9 +85,9 @@ export default function Search() {
         <Input
           required
           onChange={onChange}
-          placeholder="검색어를 입력해주세요"
+          placeholder="아이디를 입력해주세요"
         />
-        <SubmitBtn type="submit" value="Enter" />
+        <SubmitBtn type="submit" value="추가" />
       </Form>
     </Container>
   );
