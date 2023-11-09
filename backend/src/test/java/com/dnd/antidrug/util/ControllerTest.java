@@ -1,7 +1,8 @@
 package com.dnd.antidrug.util;
 
 import com.dnd.antidrug.member.controller.MemberController;
-import com.dnd.antidrug.member.repository.MemberRepository;
+import com.dnd.antidrug.member.repository.CriminalRepository;
+import com.dnd.antidrug.member.repository.ProbationRepository;
 import com.dnd.antidrug.member.service.EmailService;
 import com.dnd.antidrug.member.service.MemberService;
 import com.dnd.antidrug.security.util.JwtProvider;
@@ -13,7 +14,6 @@ import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -51,7 +51,8 @@ public class ControllerTest {
     @MockBean protected EmailService emailService;
 
     // Repository
-    @MockBean protected MemberRepository memberRepository;
+    @MockBean protected ProbationRepository probationRepository;
+    @MockBean protected CriminalRepository criminalRepository;
 
     protected String createToken(String email, String secretKey) {
 

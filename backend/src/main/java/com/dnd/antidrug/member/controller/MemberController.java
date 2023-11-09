@@ -6,6 +6,7 @@ import com.dnd.antidrug.member.dto.request.JoinRequest;
 import com.dnd.antidrug.member.dto.request.LoginRequest;
 import com.dnd.antidrug.member.dto.response.TokenResponse;
 import com.dnd.antidrug.member.service.MemberService;
+import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class MemberController {
 
     // 이메일 인증 요청
     @PostMapping("/email/verify-request")
+    @ApiOperation(value="이메일 인증 요청", notes="입력받은 이메일로 인증 번호 전송 요청")
     public ResponseEntity<Void> sendEmail(@RequestBody EmailVerifyRequest emailVerifyRequest) {
         log.info("Send Email to {}", emailVerifyRequest.email());
 
@@ -36,6 +38,7 @@ public class MemberController {
 
     // 이메일 인증 확인
     @GetMapping("/email/verify")
+    @ApiOperation(value="이메일 인증 확인", notes="이메일로 받은 인증번호가 제대로 왔는지 인증")
     public ResponseEntity<Void> verifyEmail(@RequestBody EmailVerificationRequest emailVerificationRequest) {
         log.info("verify email {} with authCode {}", emailVerificationRequest.email(), emailVerificationRequest.authCode());
 
@@ -47,6 +50,7 @@ public class MemberController {
 
     // 회원 가입
     @PostMapping("/join")
+    @ApiOperation(value="회원가입", notes="회원가입")
     public ResponseEntity<Void> joinMember(@RequestBody JoinRequest joinRequest) {
         log.info("{} request join", joinRequest.email());
 
@@ -57,6 +61,7 @@ public class MemberController {
 
     // 로그인
     @PostMapping("/login")
+    @ApiOperation(value="로그인", notes="로그인")
     public ResponseEntity<TokenResponse> loginMember(@RequestBody @Valid LoginRequest loginRequest) {
         log.info("{} request Login", loginRequest.email());
 
@@ -64,4 +69,5 @@ public class MemberController {
 
         return ResponseEntity.ok().body(tokenResponse);
     }
+
 }

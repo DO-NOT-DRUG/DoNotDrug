@@ -1,5 +1,6 @@
 package com.dnd.antidrug.tweet.entity;
 
+import com.dnd.antidrug.member.entity.Criminal;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,5 +33,9 @@ public class Twitter {
     private String tweet;
 
     private String url;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "criminal_id")
+    private Criminal criminal;
 
 }
