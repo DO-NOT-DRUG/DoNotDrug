@@ -46,7 +46,7 @@ public class ProbationController {
     }
 
     // 게시물 조회
-    @GetMapping("/tweet/list")
+    @PostMapping("/tweet/list")
     @ApiOperation(value="마약 사범이 읽은 게시글 조회", notes="마약 사범이 읽은 게시글 조회")
     public ResponseEntity<List<TwitterResponse>> getCriminalReadTweet(@RequestBody CriminalReadTweetRequest criminalReadTweetRequest) {
         List<TwitterResponse> twitterResponseList = probationService.getCriminalReadTweetList(criminalReadTweetRequest);
