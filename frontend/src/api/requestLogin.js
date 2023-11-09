@@ -10,7 +10,7 @@ export function requestLogin() {
   const navigate = useNavigate();
 
   const Login = async (loginData) => {
-    console.log(response.data);
+    
     try {
       const response = await axios.post('/api/member/login', loginData);
       const { id, 
@@ -34,8 +34,6 @@ export function requestLogin() {
         navigate('/adminMain');
       }
       
-
-  
     } catch (error) {
         if (error.response) {
           console.log(error.response.data)

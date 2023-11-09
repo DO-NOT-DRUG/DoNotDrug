@@ -2,13 +2,13 @@ import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
 
-export function requestJoin (joinData) {
+export function requestJoin () {
   const navigate = useNavigate();
 
   const Join = async (joinData) => {
     try {
       const response = await axios.post('/api/member/join', joinData);
-      alert('회원가입 성공');
+      alert('회원가입 성공: ' + response.data.message);
       navigate('/login');
       
     } catch (error) {
