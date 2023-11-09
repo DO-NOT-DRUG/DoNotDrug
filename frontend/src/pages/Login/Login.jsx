@@ -27,7 +27,7 @@ const RadioWrapper = styled.div`
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('CRIMINAL');
+  const [role, setRole] = useState('');
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -35,14 +35,15 @@ function Login() {
 
   const login = requestLogin();
 
-  const LoginData = {
+  const loginData = {
     email,
     loginPassword: password,
+    role
   };
 
   const handleLoginRequest = async (event) => {
     event.preventDefault();
-    login(LoginData);
+    login(loginData);
   };
 
   return (

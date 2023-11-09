@@ -8,7 +8,7 @@ export function requestJoin (joinData) {
   const Join = async (joinData) => {
     try {
       const response = await axios.post('/api/member/join', joinData);
-      alert('회원가입 성공: ' + response.data.message);
+      alert('회원가입 성공');
       navigate('/login');
       
     } catch (error) {
