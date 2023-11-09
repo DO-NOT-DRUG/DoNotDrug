@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import axios from 'axios';
 
 import { Container, Title } from '@/components'
 import Loading from '@/components/Loading/Loading';
+import { requestUserData } from '@/api/requestUserData';
 
 
 const Table = styled.table`
@@ -34,17 +34,6 @@ const TableCell = styled.td`
   border: 1px solid #ddd;
   text-align: left;
 `;
-
-
-const requestUserData = async () => {
-  try {
-    const response = await axios.get('/api/probation/list');
-    return response.data;
-  } catch {
-    alert('Error: ', error);
-    return [];
-  }
-};
 
 
 function AdminMain() {
