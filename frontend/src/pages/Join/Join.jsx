@@ -26,7 +26,7 @@ function Join() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
-  const [role, setRole] = useState('GENERAL');
+  const [role, setRole] = useState('CRIMINAL');
   
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
@@ -114,8 +114,8 @@ function Join() {
               <RoleInput 
                 type="radio"
                 name="role"
-                value="GENERAL"
-                checked={role==='GENERAL'}
+                value="CRIMINAL"
+                checked={role==='CRIMINAL'}
                 onChange={handleRoleChange}
               />
             </RadioWrapper>
@@ -128,8 +128,8 @@ function Join() {
               <RoleInput 
                 type="radio"
                 name="role"
-                value="ADMIN"
-                checked={role==='ADMIN'}
+                value="GENERAL"
+                checked={role==='GENERAL'}
                 onChange={handleRoleChange}
               />
             </RadioWrapper>

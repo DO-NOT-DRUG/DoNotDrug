@@ -7,6 +7,7 @@ import Join from '@/pages/Join/Join';
 import Login from '@/pages/Login/Login';
 import Search from '@/pages/Search/Search';
 import Posts from '@/pages/Posts/Posts';
+import AdminMain from '@/pages/AdminMain/AdminMain';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/search" element={<Search />} />
           <Route path="/posts" element={<Posts />} />
+          <Route path="/adminMain" element={<AdminMain />} />
         </Routes>
       </BaseLayout>
     </Router>
