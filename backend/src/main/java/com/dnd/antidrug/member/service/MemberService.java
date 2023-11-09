@@ -4,13 +4,17 @@ import com.dnd.antidrug.global.exception.ErrorCode;
 import com.dnd.antidrug.member.dto.request.JoinRequest;
 import com.dnd.antidrug.member.dto.request.LoginRequest;
 import com.dnd.antidrug.member.dto.response.TokenResponse;
-import com.dnd.antidrug.member.entity.Member;
+import com.dnd.antidrug.member.entity.Criminal;
+import com.dnd.antidrug.member.entity.Probation;
+import com.dnd.antidrug.member.entity.Role;
 import com.dnd.antidrug.member.exception.EmailException;
 import com.dnd.antidrug.member.exception.MemberException;
-import com.dnd.antidrug.member.repository.MemberRepository;
+import com.dnd.antidrug.member.repository.CriminalRepository;
+import com.dnd.antidrug.member.repository.ProbationRepository;
 import com.dnd.antidrug.security.util.JwtProvider;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +24,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -29,10 +34,14 @@ public class MemberService {
     private final Long emailExpireTimeMs =  1800000L;
     private final String EMAIL_PREFIX = "AuthCode";
 
-    private final MemberRepository memberRepository;
+    private final ProbationRepository probationRepository;
+    private final CriminalRepository criminalRepository;
+
     private final EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+    private final CriminalService criminalService;
+    private final ProbationService probationService;
 
     private final RedisTemplate<String, String> redisTemplate;
 
@@ -63,38 +72,73 @@ public class MemberService {
         redisTemplate.delete(EMAIL_PREFIX+email);
     }
 
+    @Transactional
     public void joinMember(JoinRequest joinRequest) {
         // 이메일 중복 검사
         this.checkDuplicatedEmail(joinRequest.email());
 
         // 이에일 인증 여부 검사 -> 캐시에 없으면 인증된것으로 간주
 
-        Member member = Member.from(joinRequest);
-        member.encodePassword(passwordEncoder.encode(member.getLoginPassword()));
+//        // 보호관찰관 - 범죄자 구분
+        if(joinRequest.role() == Role.GENERAL) {
+            // 보호 관찰관
+            Probation probation = Probation.builder()
+                .email(joinRequest.email())
+                .name(joinRequest.name())
+                .loginPassword(joinRequest.loginPassword())
+                .role(joinRequest.role())
+                .build();
+            probation.encodePassword(passwordEncoder.encode(probation.getLoginPassword()));
 
-        memberRepository.save(member);
-    }
+            probationRepository.save(probation);
+        }
+        else if(joinRequest.role() == Role.CRIMINAL) {
+            // 범죄자
+            Criminal criminal = Criminal.builder()
+                .email(joinRequest.email())
+                .name(joinRequest.name())
+                .loginPassword(joinRequest.loginPassword())
+                .role(joinRequest.role())
+                .readTweets(new ArrayList<>())
+                .isProtected(false)
+                .riskPoint(0)
+                .build();
+            criminal.encodePassword(passwordEncoder.encode(criminal.getLoginPassword()));
 
-    public TokenResponse loginMember(LoginRequest loginRequest) {
-        // 회원 검색
-        Member member = findByEmail(loginRequest.email());
-
-        // 비밀번호 확인
-        if(!passwordEncoder.matches(loginRequest.loginPassword(), member.getLoginPassword())) {
-            throw new MemberException(ErrorCode.INVALID_PASSWORD);
+            criminalRepository.save(criminal);
         }
 
-        // 토큰 생성
-        String accessToken = jwtProvider.createAccessToken(member.getId(), member.getEmail(), secretKey);
-        String refreshToken = jwtProvider.createRefreshToken(member.getEmail(), secretKey);
-
-        return new TokenResponse(member.getId(), accessToken, refreshToken);
     }
 
-    private Member findByEmail(String email) {
-        return memberRepository.findByEmail(email)
-                               .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
+    @Transactional
+    public TokenResponse loginMember(LoginRequest loginRequest) {
+        // 회원 검색
+        if(loginRequest.role() == Role.CRIMINAL) {
+            Criminal criminal = criminalService.findByEmail(loginRequest.email());
+            // 비밀번호 확인
+            if(!passwordEncoder.matches(loginRequest.loginPassword(), criminal.getLoginPassword())) {
+                throw new MemberException(ErrorCode.INVALID_PASSWORD);
+            }
+
+            String accessToken = jwtProvider.createAccessToken(criminal.getId(), criminal.getEmail(), secretKey);
+            String refreshToken = jwtProvider.createRefreshToken(criminal.getEmail(), secretKey);
+
+            return new TokenResponse(criminal.getId(), accessToken, refreshToken);
+        }
+        else {
+            Probation probation = probationService.findByEmail(loginRequest.email());
+            // 비밀번호 확인
+            if(!passwordEncoder.matches(loginRequest.loginPassword(), probation.getLoginPassword())) {
+                throw new MemberException(ErrorCode.INVALID_PASSWORD);
+            }
+
+            String accessToken = jwtProvider.createAccessToken(probation.getId(), probation.getEmail(), secretKey);
+            String refreshToken = jwtProvider.createRefreshToken(probation.getEmail(), secretKey);
+
+            return new TokenResponse(probation.getId(), accessToken, refreshToken);
+        }
     }
+
 
 
 
@@ -113,9 +157,10 @@ public class MemberService {
     }
 
     private void checkDuplicatedEmail(String email) {
-        Optional<Member> member = memberRepository.findByEmail(email);
+        Optional<Probation> probation = probationRepository.findByEmail(email);
+        Optional<Criminal> criminal = criminalRepository.findByEmail(email);
 
-        if(member.isPresent()) {
+        if(probation.isPresent() || criminal.isPresent()) {
             log.info("Already exists email {}", email);
             throw new MemberException(ErrorCode.EMAIL_DUPLICATED);
         }

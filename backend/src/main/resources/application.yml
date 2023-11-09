@@ -1,10 +1,9 @@
 server:
   port: 9999
 
-
 spring:
   datasource:
-    url: ${DB_URL}
+    url: jdbc:mysql://localhost:3306/dnd?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
     username: ${DB_USER}
     password: ${DB_PW}
     hikari:
@@ -42,7 +41,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MariaDB103Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
         default_batch_fetch_size: 1000
   sql:
@@ -53,7 +52,9 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 jwt:
   token:
     secret: ${JWT_SECRET_KEY}
