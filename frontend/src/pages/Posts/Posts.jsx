@@ -54,11 +54,11 @@ export default function Posts() {
 
   useEffect(() => {
     setLoading(true);
-    // const criminalId =
+    const criminalId = sessionStorage.getItem('id');
     const token = sessionStorage.getItem('accessToken');
     axios
       .post(
-        `/api/v1/tweet/list/${criminalId}`,
+        `/api/tweet/list/${criminalId}`,
         {
           keyword: word,
         },
@@ -99,10 +99,10 @@ export default function Posts() {
           {subset.map((item, idx) => {
             return (
               <Tweet
-                userName={item.Nickname}
-                userId={item.User}
-                tweet={item.Tweet}
-                url={item.URL}
+                userName={item.username}
+                userId={item.user}
+                tweet={item.tweet}
+                url={item.url}
               />
             );
           })}
