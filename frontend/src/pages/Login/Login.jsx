@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Button, Container, Input, Form, Title, ButtonWrapper } from '../../components';
+import { Button, Container, Input, Form, Title, ButtonWrapper, RoleInput } from '../../components';
 import { requestLogin } from '@/api/requestLogin';
 
 const InputWrapper = styled.div`
@@ -19,23 +19,31 @@ const Label = styled.label`
   padding: 4px;
 `;
 
+const RadioWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+  const [role, setRole] = useState('');
+
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleRoleChange = (e) => setRole(e.target.value);
 
   const login = requestLogin();
 
-  const LoginData = {
+  const loginData = {
     email,
     loginPassword: password,
+    role
   };
 
   const handleLoginRequest = async (event) => {
     event.preventDefault();
-    login(LoginData);
+    login(loginData);
   };
 
   return (
@@ -69,10 +77,38 @@ function Login() {
               />
             </InputWrapper>
           </Li>
+          <Li>
+            <RadioWrapper>
+              <Label htmlFor='role'>
+                일반사용자
+              </Label>
+              <RoleInput 
+                type="radio"
+                name="role"
+                value="CRIMINAL"
+                checked={role==='CRIMINAL'}
+                onChange={handleRoleChange}
+              />
+            </RadioWrapper>
+          </Li>
+          <Li>
+            <RadioWrapper>
+              <Label htmlFor='role'>
+                관리자
+              </Label>
+              <RoleInput 
+                type="radio"
+                name="role"
+                value="GENERAL"
+                checked={role==='GENERAL'}
+                onChange={handleRoleChange}
+              />
+            </RadioWrapper>
+          </Li>
         </ul>
         <ButtonWrapper>
           <Button type="submit">로그인</Button>
-          <Link to='/join'>Already have an account?</Link>
+          <Link to='/join'>No account?</Link>
         </ButtonWrapper>
       </Form>
     </Container>

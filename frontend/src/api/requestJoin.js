@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 export function requestJoin () {
   const navigate = useNavigate();
 
-  const Join = async(joinData) => {
+  const Join = async (joinData) => {
     try {
       const response = await axios.post('/api/member/join', joinData);
       alert('회원가입 성공: ' + response.data.message);
       navigate('/login');
       
     } catch (error) {
+        console.log(error)
         if (error.response) {
           alert('회원가입 실패: ' + error.response.data.message);
         } else if (error.request) {

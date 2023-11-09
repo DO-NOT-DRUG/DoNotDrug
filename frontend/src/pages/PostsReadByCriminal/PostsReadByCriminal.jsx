@@ -40,12 +40,13 @@ const StyledPaginate = styled(ReactPaginate).attrs({
   }
 `;
 
-export default function Posts() {
+export default function PostsReadByCriminal() {
   const location = useLocation();
 
-  const word = location.state.keyword;
+  const criminalId = location.state.id;
+  const probationId = 'admin1';
 
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
@@ -54,20 +55,11 @@ export default function Posts() {
 
   useEffect(() => {
     setLoading(true);
-    const criminalId = sessionStorage.getItem('id');
-    const token = sessionStorage.getItem('accessToken');
     axios
-      .post(
-        `/api/tweet/list/${criminalId}`,
-        {
-          keyword: word,
-        },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
+      .post('/api/v1/probation/tweet/list', {
+        criminalId: 'test1',
+        probationId: probationId,
+      })
       .then((res) => {
         setData(res.data);
         setTotalPages(Math.ceil(res.data.length / itemsPerPage));
@@ -89,20 +81,20 @@ export default function Posts() {
   };
   return (
     <Container>
+      <H1>
+        <span>{uid}</span>가 조회한 마약 게시글입니다.
+      </H1>
       {isLoading ? (
         <Loading />
-      ) : totalPages !== 0 ? (
+      ) : data ? (
         <div>
-          <H1>
-            <span>{word}</span>의 검색 결과입니다.
-          </H1>
           {subset.map((item, idx) => {
             return (
               <Tweet
-                userName={item.username}
-                userId={item.user}
-                tweet={item.tweet}
-                url={item.url}
+                userName={item.Nickname}
+                userId={item.User}
+                tweet={item.Tweet}
+                url={item.URL}
               />
             );
           })}
@@ -124,9 +116,7 @@ export default function Posts() {
           />
         </div>
       ) : (
-        <H1>
-          <span>{word}</span> 검색 결과가 없습니다.
-        </H1>
+        <div>{uid} 조회 결과가 없습니다.</div>
       )}
     </Container>
   );
