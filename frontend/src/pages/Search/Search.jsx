@@ -37,7 +37,7 @@ const SubmitBtn = styled.input`
     cursor: pointer;
     &:hover {
       opacity: 0.8;
-      background-color: blue;
+      background-color: #5538ee;
       color: white;
     }
   }
