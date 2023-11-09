@@ -11,7 +11,8 @@ export function requestLogin() {
 
   const Login = async (LoginData) => {
     try {
-      const response = await axios.post('/api/login', LoginData);
+      const response = await axios.post('/api/member/login', LoginData);
+      console.log(response)
       const { accessToken, refreshToken } = response.data
       
       // AccessToken ->  Recoil 상태에 저장.
@@ -28,6 +29,7 @@ export function requestLogin() {
   
     } catch (error) {
         if (error.response) {
+          console.log(error.response.data)
           alert('로그인 실패: ' + error.response.data.message);
         } else if (error.request) {
           alert('로그인 요청 실패: 서버에서 응답이 없습니다.');
