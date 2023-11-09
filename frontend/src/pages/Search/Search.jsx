@@ -1,14 +1,7 @@
+import { Container } from '@/components';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 420px;
-  padding: 50px 0px;
-`;
 
 const Form = styled.form`
   margin-top: 50px;
@@ -51,6 +44,7 @@ const SubmitBtn = styled.input`
 `;
 
 export default function Search() {
+  const navigate = useNavigate();
   const [word, setWord] = useState('');
 
   const onChange = (e) => {
@@ -59,10 +53,10 @@ export default function Search() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(word);
+    navigate('/posts', { state: { keyword: word } });
   };
   return (
-    <Wrapper>
+    <Container>
       <Form onSubmit={onSubmit}>
         <Input
           required
@@ -71,6 +65,6 @@ export default function Search() {
         />
         <SubmitBtn type="submit" value="Enter" />
       </Form>
-    </Wrapper>
+    </Container>
   );
 }
