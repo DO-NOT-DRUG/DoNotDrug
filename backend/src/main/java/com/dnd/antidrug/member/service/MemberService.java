@@ -123,7 +123,7 @@ public class MemberService {
             String accessToken = jwtProvider.createAccessToken(criminal.getId(), criminal.getEmail(), secretKey);
             String refreshToken = jwtProvider.createRefreshToken(criminal.getEmail(), secretKey);
 
-            return new TokenResponse(criminal.getId(), accessToken, refreshToken);
+            return new TokenResponse(criminal.getId(), accessToken, refreshToken, Role.CRIMINAL);
         }
         else {
             Probation probation = probationService.findByEmail(loginRequest.email());
@@ -135,7 +135,7 @@ public class MemberService {
             String accessToken = jwtProvider.createAccessToken(probation.getId(), probation.getEmail(), secretKey);
             String refreshToken = jwtProvider.createRefreshToken(probation.getEmail(), secretKey);
 
-            return new TokenResponse(probation.getId(), accessToken, refreshToken);
+            return new TokenResponse(probation.getId(), accessToken, refreshToken, Role.GENERAL);
         }
     }
 
