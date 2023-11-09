@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { Button, Container, Input, Form, Title, ButtonWrapper, RoleInput } from '../../components';
 import { requestJoin } from '@/api/requestJoin';
@@ -12,7 +13,6 @@ const Li = styled.li`
 `;
 const Label = styled.label`
   width: 120px;
-
 `;
 
 const RadioWrapper = styled.div`
@@ -137,6 +137,7 @@ function Join() {
         </ul>
         <ButtonWrapper>
           <Button type="submit">회원가입하기</Button>
+          <Link to='/login'>Already have an account?</Link>
         </ButtonWrapper>
       </Form>
     </Container>

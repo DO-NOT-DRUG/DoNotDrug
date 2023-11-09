@@ -9,24 +9,31 @@ export function requestLogin() {
   const setAccessToken = useSetRecoilState(accessTokenState);
   const navigate = useNavigate();
 
-  const Login = async (LoginData) => {
+  const Login = async (loginData) => {
+    
     try {
-      const response = await axios.post('/api/member/login', LoginData);
-      console.log(response)
-      const { accessToken, refreshToken } = response.data
+      const response = await axios.post('/api/member/login', loginData);
+      const { id, 
+              accessToken, 
+              refreshToken, 
+              role 
+            } = response.data;
       
       // AccessToken ->  Recoil 상태에 저장.
       setAccessToken(accessToken);
       sessionStorage.setItem('accessToken', accessToken);
-  
+      sessionStorage.setItem('id', id);
       localStorage.setItem('refreshToken', refreshToken);
   
-      alert('환영합니다 ' + response.data.message + '님!');
+      alert('환영합니다 ' + id + '님!');
       
       // 성공시 페이지 이동
-      navigate('/');
-
-  
+      if (role === 'CRIMINAL') {
+        navigate('/search');
+      } else {
+        navigate('/adminMain');
+      }
+      
     } catch (error) {
         if (error.response) {
           console.log(error.response.data)
